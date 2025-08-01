@@ -156,6 +156,27 @@
       .nav-button:hover {
         background-color: #5a6268;
       }
+      /* 解答表示用のスタイル */
+      .answer-key {
+          margin-top: 30px;
+          padding: 20px;
+          background-color: #fffbe6;
+          border: 1px solid #ffecb3;
+          border-radius: 8px;
+      }
+      .answer-key h3 {
+          margin-top: 0;
+          color: #c08d00;
+          border-bottom: 1px solid #ffd54f;
+          padding-bottom: 8px;
+      }
+      .answer-key p {
+          margin: 10px 0;
+          line-height: 1.6;
+      }
+      .answer-key strong {
+          color: #0056b3;
+      }
     </style>
   </head>
   <body>
@@ -298,6 +319,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-1" class="answer-key" style="display: none"></div>
       </div>
 
       <div id="page-2" class="page">
@@ -439,6 +461,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-2" class="answer-key" style="display: none"></div>
       </div>
       <div id="page-3" class="page">
         <div class="main-question">
@@ -564,6 +587,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-3" class="answer-key" style="display: none"></div>
       </div>
 
       <!--page. 4-->
@@ -670,6 +694,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-4" class="answer-key" style="display: none"></div>
       </div>
       <div id="page-5" class="page">
         <div class="main-question">
@@ -824,6 +849,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-5" class="answer-key" style="display: none"></div>
       </div>
       <div id="page-6" class="page">
         <div class="main-question">
@@ -897,6 +923,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-6" class="answer-key" style="display: none"></div>
       </div>
       <div id="page-7" class="page">
         <div class="main-question">
@@ -1038,6 +1065,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-7" class="answer-key" style="display: none"></div>
       </div>
       <div id="page-8" class="page">
         <div class="main-question">
@@ -1108,7 +1136,7 @@
         </div>
         <div class="main-question">
           <h2>
-            Q6.
+            Q26.
             技術基準に適合しない無線設備に対する手続きについて、空欄に入る語句を以下より選べ。
           </h2>
           <div class="sub-question">
@@ -1165,6 +1193,7 @@
             次のページへ →
           </button>
         </div>
+        <div id="answer-key-8" class="answer-key" style="display: none"></div>
       </div>
       <div id="page-9" class="page">
         <div class="main-question">
@@ -1191,8 +1220,9 @@
             ><input type="text" id="answer-27-4" placeholder="[D]" />
             <span id="result-27-4" class="result-marker"></span
             ><span>。この[C]は、</span
-            ><input type="text" id="answer-27-5" placeholder="[E]" />
-            <span id="result-27-5" class="result-marker"></span><span>とする。 </span>
+            ><input type="text" id="answer-27-5" placeholder="[F]" />
+            <span id="result-27-5" class="result-marker"></span
+            ><span>とする。 </span>
           </div>
           <div class="choices-list">
             <span>1. 行政上の必要</span>
@@ -1298,13 +1328,14 @@
           </div>
         </div>
         <div class="page-navigation">
-          <button onclick="showPage(7)" class="nav-button">
+          <button onclick="showPage(8)" class="nav-button">
             ← 前のページへ
           </button>
           <button onclick="checkAnswers(9)" class="check-button">
             9ページの答え合わせ
           </button>
         </div>
+        <div id="answer-key-9" class="answer-key" style="display: none"></div>
       </div>
     </div>
 
@@ -1394,7 +1425,7 @@
         { id: "13-2", type: "fill", answer: "5", page: 4 },
 
         // ---page. 5---
-        { id: "14-1", type: "fill", answer: "偏差及び幅", page: 5 },
+        { id: "14-1", type: "fill", answer: "周波数偏差及び幅", page: 5 },
         { id: "14-2", type: "fill", answer: "高調波の強度等", page: 5 },
         { id: "14-3", type: "fill", answer: "適合", page: 5 },
 
@@ -1463,7 +1494,7 @@
         { id: "26-4", type: "fill", answer: "8", page: 8 },
         { id: "26-5", type: "fill", answer: "13", page: 8 },
 
-        // ---page. 8---
+        // ---page. 9---
         { id: "27-1", type: "fill", answer: "2", page: 9 },
         { id: "27-2", type: "fill", answer: "3", page: 9 },
         { id: "27-3", type: "fill", answer: "12", page: 9 },
@@ -1506,7 +1537,12 @@
             const userAnswer = document.getElementById(
               `answer-${question.id}`
             ).value;
-            if (userAnswer.trim() === question.answer) isCorrect = true;
+            // 回答の比較時に大文字・小文字、全角・半角を区別しないようにトリムと小文字化
+            if (
+              userAnswer.trim().toLowerCase() ===
+              question.answer.trim().toLowerCase()
+            )
+              isCorrect = true;
           } else if (question.type === "choice") {
             const selectedOption = document.querySelector(
               `input[name="answer-${question.id}"]:checked`
@@ -1517,7 +1553,6 @@
             resultMarker.innerHTML = `<strong>【模範解答】</strong><br>${question.answer}`;
             return;
           } else if (question.type === "checkbox") {
-            // ★★★ 修正点：チェックボックス問題の採点ロジックを追加 ★★★
             const checkedBoxes = document.querySelectorAll(
               `input[name="answer-${question.id}"]:checked`
             );
@@ -1540,6 +1575,88 @@
             resultMarker.style.color = "blue";
           }
         });
+        
+        // ★★★ 追加：答えを表示する関数を呼び出す ★★★
+        showAnswerKey(pageNumber);
+      }
+
+      // ★★★ 追加：答えを表示する関数 ★★★
+      function showAnswerKey(pageNumber) {
+        const container = document.getElementById(`answer-key-${pageNumber}`);
+        if (!container) return;
+
+        let html = "<h3>解答</h3>";
+
+        switch (pageNumber) {
+          case 1:
+            html += `
+              <p><strong>Q1:</strong> 1-1: 公平, 1-2: 能率的, 1-3: 公共の福祉</p>
+              <p><strong>Q2:</strong> 【模範解答】公平かつ能率的な利用を確保することによって、公共の福祉を増進するように利用されるべき。</p>
+              <p><strong>Q3:</strong> A,三百万、B,電気的設備、C,無線設備の操作を行う者の総体、D,免許</p>
+              <p><strong>Q4:</strong> 4-1: 1 (免許), 4-2: 4 (0.5W), 4-3: 2 (適合表示無線設備), 4-4: 3 (登録)</p>
+            `;
+            break;
+          case 2:
+            html += `
+              <p><strong>Q5:</strong> 5-1: 国籍, 5-2: 外国, 5-3: 三分の一</p>
+              <p><strong>Q6:</strong> A: 申請の審査, B: 予備免許, C: 落成届, D: 落成後の検査</p>
+              <p><strong>Q7:</strong> 7-1: 1, 7-2: 7, 7-3: 6, 7-4: 8, 7-5: 2, 7-6: 3, 7-7: 4, 7-8: 5</p>
+            `;
+            break;
+          case 3:
+            html += `
+              <p><strong>Q8:</strong> 1, 4</p>
+              <p><strong>Q9:</strong> 9-1: 3, 9-2: 8, 9-3: 6, 9-4: 5, 9-5: 4, 9-6: 1, 9-7: 7, 9-8: 2</p>
+              <p><strong>Q10:</strong> 10-1: 3, 10-2: 4, 10-3: 1, 10-4: 2, 10-5: 5</p>
+            `;
+            break;
+          case 4:
+            html += `
+              <p><strong>Q11:</strong> 11-1: 1, 11-2: 3, 11-3: 4, 11-4: 2, 11-5: 5</p>
+              <p><strong>Q12:</strong> 1</p>
+              <p><strong>Q13:</strong> 13-1: 3 (登録), 13-2: 5 (測定器)</p>
+            `;
+            break;
+          case 5:
+             html += `
+              <p><strong>Q14:</strong> A: 周波数偏差及び幅, B: 高調波の強度等, C: 適合</p>
+              <p><strong>Q15:</strong> 15-1: 8, 15-2: 3, 15-3: 1, 15-4: 6</p>
+              <p><strong>Q16:</strong> A: 2 (副次的に), B: 5 (高周波電流)</p>
+              <p><strong>Q17:</strong> A: 1 (人体に危害), B: 5 (物件に損傷)</p>
+              <p><strong>Q18:</strong> A: 2 (10グラム), B: 4 (6分間), C: 8 (2W)</p>
+            `;
+            break;
+          case 6:
+            html += `
+              <p><strong>Q19:</strong> A: 2 (能率), B: 4 (整合), C: 3 (近傍), D: 1 (給電線)</p>
+              <p><strong>Q20:</strong> A: 6 (技術基準適合), B: 5 (工事設計), C: 2 (自己確認機器), D: 4 (総務大臣)</p>
+            `;
+            break;
+          case 7:
+            html += `
+              <p><strong>Q21:</strong> A: 3, B: 6, C: 7, D: 5, E: 8, F: 1, G: 2, H: 4</p>
+              <p><strong>Q22:</strong> A: 5 (陸上), B: 10 (500W以下), C: 3 (30MHz以上), D: 8 (技術操作)</p>
+              <p><strong>Q23:</strong> A: 4 (罰金以上), B: 2 (二年), C: 6 (著しく心身)</p>
+            `;
+            break;
+          case 8:
+            html += `
+              <p><strong>Q24:</strong> A: 目的, B: 通信の相手方, C: 通信事項, D: 遭難通信, E: 緊急通信, F: 安全通信, G: 非常通信</p>
+              <p><strong>Q25:</strong> A: 特定の相手方, B: その存在, C: 内容を漏らし, D: 窃用</p>
+              <p><strong>Q26:</strong> A: 2, B: 14, C: 6, D: 8, E: 13</p>
+            `;
+            break;
+          case 9:
+            html += `
+              <p><strong>Q27:</strong> A: 2 (公益上の必要), B: 3 (支障を及ぼさない範囲), C: 12 (損失), D: 15 (補償しなければならない), E: 17 (通常生ずべき損失)</p>
+              <p><strong>Q28:</strong> A: 3, B: 5, C: 7, D: 10, E: 13, F: 16</p>
+              <p><strong>Q29:</strong> A: 3 (一年以下), B: 6 (50万円以下), C: 2 (二年以下), D: 5 (100万円以下)</p>
+            `;
+            break;
+        }
+
+        container.innerHTML = html;
+        container.style.display = "block";
       }
     </script>
   </body>
